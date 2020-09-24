@@ -25,6 +25,6 @@ jobs:
       - name: Publish image
         run: docker push ${{ env.IMAGE }}
 
-      - run: gh api repos/${{ github.repository_owner }}/ghcr-install/dispatches <<< '{"event_type":"build"}' --input -
+      - run: gh api repos/${{ github.repository_owner }}/ghcr-install/dispatches <<< '{"event_type":"run"}' --input -
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
