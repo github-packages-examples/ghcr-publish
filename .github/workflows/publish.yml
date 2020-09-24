@@ -5,7 +5,7 @@ env:
   IMAGE: ghcr.io/${{ github.repository }}:latest
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,5 +19,8 @@ jobs:
       - name: Build image
         run: docker build . -t ${{ env.IMAGE }}
 
-      - name: Run image
-        run: docker run ${{ env.IMAGE }}
+      - name: Login to ghcr.io
+        run: docker login https://ghcr.io -u token -p ${{ secrets.READ_AND_WRITE_PACKAGES_TOKEN }}
+
+      - name: Publish image
+        run: docker push ${{ env.IMAGE }}
