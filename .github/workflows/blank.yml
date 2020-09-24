@@ -1,0 +1,23 @@
+on:
+  push:
+
+env:
+  IMAGE: ghcr.io/${{ github.repository }}:latest
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Create a Dockerfile
+        run: |
+          echo 'FROM alpine' > Dockerfile
+          echo 'ENTRYPOINT ["echo", "Hello from ${{ github.repository }}!"]' >> Dockerfile
+
+      - name: Build image
+        run: docker build . -t ${{ env.IMAGE }}
+
+      - name: Run image
+        run: docker run ${{ env.IMAGE }}
