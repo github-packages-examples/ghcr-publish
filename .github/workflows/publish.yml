@@ -25,8 +25,8 @@ jobs:
       - name: Publish image
         run: docker push ${IMAGE,,} # lowercase IMAGE
 
-      # Trigger workflow in ghcr-install repo if REPO_TOKEN secret is defined
-      - if: ${{ env.GITHUB_TOKEN != null }}
+      - name: Trigger ghcr-install workflow
+        if: ${{ env.GITHUB_TOKEN != null }}
         run: gh api repos/${{ github.repository_owner }}/ghcr-install/dispatches <<< '{"event_type":"run"}' --input -
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
