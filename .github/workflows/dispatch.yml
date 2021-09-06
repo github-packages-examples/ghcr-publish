@@ -1,0 +1,13 @@
+on:
+  registry_package:
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger ghcr-install workflow
+        if: ${{ env.GITHUB_TOKEN != null }}
+        run: gh api repos/${{ github.repository_owner }}/ghcr-install/dispatches <<< '{"event_type":"run"}' --input -
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
