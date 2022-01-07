@@ -16,7 +16,7 @@ jobs:
         run: |
           echo 'FROM alpine' > Dockerfile
           echo 'ENTRYPOINT ["echo", "Hello from ${{ github.repository }}!"]' >> Dockerfile
-          echo 'LABEL org.opencontainers.image.description DESCRIPTION' >> Dockerfile
+          echo 'LABEL org.opencontainers.image.description "This image was built from commit ${{ github.sha }}"' >> Dockerfile
 
       - name: Build image
         run: docker build . -t ${IMAGE,,} # lowercase IMAGE
