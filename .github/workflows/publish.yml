@@ -19,10 +19,10 @@ jobs:
           echo 'LABEL org.opencontainers.image.description "This image was built from commit ${{ github.sha }}"' >> Dockerfile
 
       - name: Build image
-        run: docker build . -t ${IMAGE,,} # lowercase IMAGE
+        run: docker build . -t ${IMAGE,,}:${{ github.sha }} # lowercase IMAGE
 
       - name: Login to ghcr.io
         run: docker login https://ghcr.io -u token --password-stdin <<< ${{ github.token }}
 
       - name: Publish image
-        run: docker push ${IMAGE,,} # lowercase IMAGE
+        run: docker push ${IMAGE,,}:${{ github.sha }} # lowercase IMAGE
